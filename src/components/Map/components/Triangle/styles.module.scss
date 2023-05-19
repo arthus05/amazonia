@@ -1,0 +1,11 @@
+$triangle-size: 50px;
+
+.triangle {
+  width: $triangle-size;
+  height: $triangle-size;
+  background-color: transparent;
+
+  border-left: calc($triangle-size / 2) solid transparent;
+  border-right: calc($triangle-size / 2) solid transparent;
+  border-bottom: $triangle-size solid green;
+}
