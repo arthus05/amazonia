@@ -36,7 +36,7 @@ export function dijkstra(graph: Graph, startNode: string, endNode: string): Shor
 
     // Update distances to neighbors
     for (const neighbor in graph[smallestNode]) {
-      const distance = distances[smallestNode] + graph[smallestNode][neighbor];
+      const distance = parseFloat((distances[smallestNode] + graph[smallestNode][neighbor]).toFixed(2));
       if (distance < distances[neighbor]) {
         distances[neighbor] = distance;
         previous[neighbor] = smallestNode;
@@ -56,8 +56,6 @@ export function dijkstra(graph: Graph, startNode: string, endNode: string): Shor
   if (path.length === 1 && path[0] === endNode) {
     return { distance: Infinity, path: [] };
   }
-
-  console.log('path', path)
 
   return { distance: distances[endNode], path };
 }
