@@ -5,6 +5,14 @@ export function dijkstra(graph: Graph, startNode: string, endNode: string): Shor
   const previous: { [node: string]: string | null } = {};
   const priorityQueue = new Set<string>();
 
+  if (!graph[startNode] || !graph[endNode]) {
+    throw new Error('Start or end node does not exist in the graph!');
+  }
+
+  if (startNode === endNode) {
+    return { distance: 0, path: [startNode] };
+  }
+
   // Initialize distances and priority queue
   for (const node in graph) {
     if (node === startNode) {

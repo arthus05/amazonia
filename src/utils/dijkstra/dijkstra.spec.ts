@@ -29,4 +29,21 @@ describe('dijkstra', () => {
     expect(result.distance).toBe(Infinity);
     expect(result.path).toEqual([]);
   });
+
+  it('should return 0 distance if start and end nodes are the same', () => {
+    const startNode = 'A';
+    const endNode = 'A';
+
+    const result: ShortestPathResult = dijkstra(graph, startNode, endNode);
+
+    expect(result.distance).toBe(0);
+    expect(result.path).toEqual(['A']);
+  });
+
+  it('should throw an error if start or end node does not exist in the graph', () => {
+    const startNode = 'A';
+    const endNode = 'F';
+
+    expect(() => dijkstra(graph, startNode, endNode)).toThrowError('Start or end node does not exist in the graph!');
+  })
 });
