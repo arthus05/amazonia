@@ -4,7 +4,6 @@ import { dijkstra } from "../../utils"
 import { Board } from "./components"
 
 import styles from './styles.module.scss'
-import { Triangle } from "./components/Triangle"
 
 const arr = [
   ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A7', 'A8'],
