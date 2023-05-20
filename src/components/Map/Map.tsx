@@ -94,7 +94,7 @@ const Map = () => {
           <h2>
             Path: {result?.path.join(' -> ')}
           </h2>
-          <button onClick={onReset}>Calculate again!</button>
+          <button onClick={onReset}>Reset!</button>
           {
             historic && (
               <section>
