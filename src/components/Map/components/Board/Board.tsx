@@ -39,27 +39,41 @@ export const Board = ({ generatorArray, handleClick, coordinates }: IBoard) => {
   }
 
   return (
-    <div className={styles.columns}>
-      {
-        generatorArray.map((column, i) => (
-          <div className={styles.rows}>
-            {
-              column.map((row) => (
-                <>
-                  <div className={styles.cell}>
-                    <div
-                      className={`${styles.square} ${isRowBlack(row, i) && styles.black}`}
-                      onClick={() => handleClick(row)}
-                    >
-                      {Object.values(coordinates).includes(row) && <span>{getIcon(row)}</span>}
-                    </div>
-                  </div>
-                </>
-              ))
-            }
-          </div>
-        ))
-      }
-    </div>
+    <section className={styles.container}>
+      <div className={styles.line}>
+
+        <div className={styles.numbers}>
+          <p>1</p>
+          <p>8</p>
+        </div>
+        <div className={styles.columns}>
+          {
+            generatorArray.map((column, i) => (
+              <div className={styles.rows}>
+                {
+                  column.map((row) => (
+                    <>
+                      <div className={styles.cell}>
+                        <div
+                          className={`${styles.square} ${isRowBlack(row, i) && styles.black}`}
+                          onClick={() => handleClick(row)}
+                        >
+                          {Object.values(coordinates).includes(row) && <span>{getIcon(row)}</span>}
+                        </div>
+                      </div>
+                    </>
+                  ))
+                }
+              </div>
+            ))
+          }
+        </div>
+
+      </div>
+      <div className={styles.letters}>
+        <p>A</p>
+        <p>H</p>
+      </div>
+    </section>
   )
 }
