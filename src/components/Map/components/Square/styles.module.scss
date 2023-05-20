@@ -1,8 +1,9 @@
-$edge: 50px;
+$edge: 15px;
 
 .square {
   width: $edge;
   height: $edge;
 
   background-color: yellow;
+  border: 1px solid black;
 }

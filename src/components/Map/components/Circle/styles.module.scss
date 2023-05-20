@@ -1,9 +1,10 @@
-$diameter: 50px;
+$diameter: 15px;
 
 .circle {
   width: $diameter;
   height: $diameter;
 
   border-radius: 100%;
+  border: 1px solid black;
   background-color: red;
 }

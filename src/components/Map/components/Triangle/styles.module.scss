@@ -1,11 +1,11 @@
-$triangle-size: 50px;
+$edge: 15px;
 
 .triangle {
-  width: $triangle-size;
-  height: $triangle-size;
+  width: $edge;
+  height: $edge;
   background-color: transparent;
 
-  border-left: calc($triangle-size / 2) solid transparent;
-  border-right: calc($triangle-size / 2) solid transparent;
-  border-bottom: $triangle-size solid green;
+  border-left: calc($edge / 2) solid transparent;
+  border-right: calc($edge / 2) solid transparent;
+  border-bottom: $edge solid green;
 }
