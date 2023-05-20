@@ -3,6 +3,9 @@ import { useEffect, useMemo, useState } from "react"
 import { dijkstra } from "../../utils"
 import { Board } from "./components"
 
+import styles from './styles.module.scss'
+import { Triangle } from "./components/Triangle"
+
 const arr = [
   ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A7', 'A8'],
   ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8'],
@@ -14,6 +17,11 @@ const arr = [
   ['H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'H7', 'H8'],
 ]
 
+interface IHistoric {
+  coordinates: ICoordinates
+  deliverTime: number
+}
+
 export interface ICoordinates {
   startingPoint: string
   object: string
@@ -22,6 +30,7 @@ export interface ICoordinates {
 
 const Map = () => {
   const [coordinates, setCoordinates] = useState<ICoordinates>({} as ICoordinates)
+  const [historic, setHistoric] = useState<IHistoric[]>([])
 
   const [apiData, setApiData] = useState()
 
@@ -40,7 +49,7 @@ const Map = () => {
     const objectToDestinationPath = dijkstra(apiData, object, destination)
 
     return {
-      distance: (startToObjectPath?.distance + objectToDestinationPath?.distance).toFixed(2),
+      time: (startToObjectPath?.time + objectToDestinationPath?.time).toFixed(2),
       path: [...startToObjectPath.path, ...objectToDestinationPath.path.slice(1)]
     }
   }, [coordinates, apiData])
@@ -55,17 +64,58 @@ const Map = () => {
     }
   }
 
+  const onReset = () => {
+    if (result) {
+      
+      setHistoric([...historic, {
+        coordinates,
+        deliverTime: Number(result.time)
+      }])
+    }
+
+    setCoordinates({} as ICoordinates)
+  }
+
   return (
-    <>
-      <Board coordinates={coordinates} handleClick={handleClick} generatorArray={arr} />
-      <h1>
-        Distância: {result?.distance}
-      </h1>
-      <h1>
-        Caminho: {result?.path.join(' -> ')}
-      </h1>
-      <button onClick={() => setCoordinates({} as ICoordinates)}>Reset</button>
-    </>
+    <section className={styles.container}>
+      <section className={styles.topInfo}>
+        <h2>By clicking on a board's square, select the coordinates:</h2>
+        <p>Drone Start: <span className={styles.startingPoint}>{coordinates.startingPoint}</span></p>
+        { coordinates.startingPoint && <p>Object pick-up: <span className={styles.object}>{coordinates.object}</span></p>}
+        { coordinates.object && <p>Delivery destination: <span className={styles.destination}>{coordinates.destination}</span></p>}
+      </section>
+
+      <section className={styles.boardContainer}>
+        <Board coordinates={coordinates} handleClick={handleClick} generatorArray={arr} />
+        <div className={styles.result}>
+          <h2>
+            Shortest time: {result?.time}
+          </h2>
+          <h2>
+            Path: {result?.path.join(' -> ')}
+          </h2>
+          <button onClick={onReset}>Calculate again!</button>
+          {
+            historic && (
+              <section>
+                <h2>Historic</h2>
+                  <ol>
+                    {
+                      historic.map((item, index) => (
+                        <li key={index}>
+                          From <strong>{item.coordinates.startingPoint}</strong>,
+                          picking-up at <strong>{item.coordinates.object} </strong>
+                          to <strong>{item.coordinates.destination}</strong> in <strong>{item.deliverTime}</strong> seconds
+                        </li>
+                      ))
+                    }
+                  </ol>
+              </section>
+            )
+          }
+        </div>
+      </section>
+    </section>
   )
 }
 
