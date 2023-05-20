@@ -3,11 +3,6 @@ import { useEffect, useMemo, useState } from "react"
 import { dijkstra } from "../../utils"
 import { Board } from "./components"
 
-import styles from './styles.module.scss'
-import { Triangle } from "./components/Triangle"
-import { Square } from "./components/Square"
-import { Circle } from "./components/Circle"
-
 const arr = [
   ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A7', 'A8'],
   ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8'],
@@ -23,10 +18,6 @@ export interface ICoordinates {
   startingPoint: string
   object: string
   destination: string
-}
-
-interface IProps {
-  setCoordinates: ({ startingPoint, object, destination }: ICoordinates) => void
 }
 
 const Map = () => {
@@ -54,7 +45,7 @@ const Map = () => {
     }
   }, [coordinates, apiData])
 
-  const handleChange = (row: string) => {
+  const handleClick = (row: string) => {
     if (!coordinates.startingPoint) {
       setCoordinates({...coordinates, startingPoint: row})
     } else if (!coordinates.object) {
@@ -66,13 +57,14 @@ const Map = () => {
 
   return (
     <>
-      <Board coordinates={coordinates} handleClick={handleChange} generatorArray={arr} />
+      <Board coordinates={coordinates} handleClick={handleClick} generatorArray={arr} />
       <h1>
         Distância: {result?.distance}
       </h1>
       <h1>
         Caminho: {result?.path.join(' -> ')}
       </h1>
+      <button onClick={() => setCoordinates({} as ICoordinates)}>Reset</button>
     </>
   )
 }

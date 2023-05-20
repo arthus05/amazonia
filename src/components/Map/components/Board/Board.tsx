@@ -31,9 +31,7 @@ export const Board = ({ generatorArray, handleClick, coordinates }: IBoard) => {
   }
 
   const getIcon = (row: string) => {
-    console.log('row', row)
-    console.log('coordinates', coordinates)
-    const foundCheckpoint = Object.keys(coordinates).find((key) => coordinates[key as keyof ICoordinates] === row)
+    const foundCheckpoint = Object.keys(coordinates).findLast((key) => coordinates[key as keyof ICoordinates] === row)
 
     if (!foundCheckpoint) return null
 
@@ -49,7 +47,6 @@ export const Board = ({ generatorArray, handleClick, coordinates }: IBoard) => {
               column.map((row) => (
                 <>
                   <div className={styles.cell}>
-                    {/* <input type="radio" name={currentPosition} value={row} onChange={handleChange} /> */}
                     <div
                       className={`${styles.square} ${isRowBlack(row, i) && styles.black}`}
                       onClick={() => handleClick(row)}
