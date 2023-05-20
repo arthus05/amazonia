@@ -1,6 +1,6 @@
 export type Graph = { [node: string]: { [neighbor: string]: number } };
 
 export interface ShortestPathResult {
-  distance: number;
+  time: number;
   path: string[];
 }

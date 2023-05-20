@@ -1,7 +1,7 @@
 import { Graph, ShortestPathResult } from "./interface";
 
 export function dijkstra(graph: Graph, startNode: string, endNode: string): ShortestPathResult {
-  const distances: { [node: string]: number } = {};
+  const times: { [node: string]: number } = {};
   const previous: { [node: string]: string | null } = {};
   const priorityQueue = new Set<string>();
 
@@ -10,28 +10,28 @@ export function dijkstra(graph: Graph, startNode: string, endNode: string): Shor
   }
 
   if (startNode === endNode) {
-    return { distance: 0, path: [startNode] };
+    return { time: 0, path: [startNode] };
   }
 
-  // Initialize distances and priority queue
+  // Initialize times and priority queue
   for (const node in graph) {
     if (node === startNode) {
-      distances[node] = 0;
+      times[node] = 0;
     } else {
-      distances[node] = Infinity;
+      times[node] = Infinity;
     }
     priorityQueue.add(node);
   }
 
   while (priorityQueue.size > 0) {
-    // Find the node with the smallest distance
-    let smallestDistance = Infinity;
+    // Find the node with the smallest time
+    let smallestTime = Infinity;
     let smallestNode: string | null = null;
 
 
     for (const node of priorityQueue) {
-      if (distances[node] < smallestDistance) {
-        smallestDistance = distances[node];
+      if (times[node] < smallestTime) {
+        smallestTime = times[node];
         smallestNode = node;
       }
     }
@@ -44,9 +44,9 @@ export function dijkstra(graph: Graph, startNode: string, endNode: string): Shor
 
     // Update distances to neighbors
     for (const neighbor in graph[smallestNode]) {
-      const distance = parseFloat((distances[smallestNode] + graph[smallestNode][neighbor]).toFixed(2));
-      if (distance < distances[neighbor]) {
-        distances[neighbor] = distance;
+      const time = parseFloat((times[smallestNode] + graph[smallestNode][neighbor]).toFixed(2));
+      if (time < times[neighbor]) {
+        times[neighbor] = time;
         previous[neighbor] = smallestNode;
       }
     }
@@ -62,8 +62,8 @@ export function dijkstra(graph: Graph, startNode: string, endNode: string): Shor
   }
 
   if (path.length === 1 && path[0] === endNode) {
-    return { distance: Infinity, path: [] };
+    return { time: Infinity, path: [] };
   }
 
-  return { distance: distances[endNode], path };
+  return { time: times[endNode], path };
 }
