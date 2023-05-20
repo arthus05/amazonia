@@ -66,11 +66,19 @@ const Map = () => {
 
   const onReset = () => {
     if (result) {
-      
-      setHistoric([...historic, {
-        coordinates,
-        deliverTime: Number(result.time)
-      }])
+      if (historic.length < 10) {
+        setHistoric([{
+          coordinates,
+          deliverTime: Number(result.time)
+        }, ...historic])
+      } else {
+        const newHistoric = [{
+            coordinates,
+            deliverTime: Number(result.time)
+          }, ...historic.slice(0, 9)]
+
+        setHistoric(newHistoric)
+      }
     }
 
     setCoordinates({} as ICoordinates)
